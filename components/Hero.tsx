@@ -156,7 +156,7 @@ export function Hero() {
   }
 
   return (
-    <section className="p-[1.5%] bg-zinc-100">
+    <section className="p-2 sm:p-[1.5%] bg-zinc-100">
       <svg width="0" height="0" style={{ position: "absolute" }}>
         <defs>
           <mask id="heroMask" maskContentUnits="objectBoundingBox">
@@ -190,7 +190,7 @@ export function Hero() {
             loop
             muted
             playsInline
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[88%] h-[36%] sm:w-[70%] sm:h-[45%] md:w-[55%] md:h-[52%] lg:w-[50%] lg:h-[55%] object-cover rounded-3xl opacity-80 mix-blend-multiply"
+            className="absolute top-[56%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[38%] sm:top-1/2 sm:w-[70%] sm:h-[45%] md:w-[55%] md:h-[52%] lg:w-[50%] lg:h-[55%] object-cover rounded-3xl opacity-80 mix-blend-multiply"
           >
             <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/liquid-metal-video_yX6NvjdW-6bLYorR3Ihmlwjivg3pjA978qrSKRU.mp4" type="video/mp4" />
           </video>
@@ -200,19 +200,19 @@ export function Hero() {
             <div className="absolute inset-0 [background:radial-gradient(60%_60%_at_50%_50%,transparent_0%,rgba(255,255,255,.5)_100%)]" />
           </div>
 
-          <div className="absolute inset-0 flex items-center justify-center z-10">
+          <div className="absolute inset-0 flex items-center justify-center pt-[clamp(70px,11vh,150px)] z-10">
             <div
               ref={cardRef}
               onMouseLeave={handleMouseLeave}
-              className="relative overflow-hidden backdrop-blur-md bg-white/70 border border-zinc-200 rounded-2xl p-9 md:p-12 transition-transform duration-500 ease-in hover:scale-[1.01] max-w-[min(36rem,92vw)] w-full text-center"
+              className="relative overflow-hidden backdrop-blur-md bg-white/70 border border-zinc-200 rounded-2xl p-6 sm:p-8 md:p-12 transition-transform duration-500 ease-in hover:scale-[1.01] max-w-[min(40rem,94vw)] w-full text-center"
               dir="rtl"
             >
               <div ref={pixelGridRef} className="absolute inset-0 pointer-events-none z-10" />
 
-              <h1 className="text-balance text-3xl/tight sm:text-4xl/tight md:text-5xl/tight tracking-tight text-zinc-900">
+              <h1 className="text-balance text-2xl/tight sm:text-4xl/tight md:text-5xl/tight tracking-tight text-zinc-900">
                 الجلسة التعريفية لنادي مجان للمبرمجين
               </h1>
-              <p className="mt-3 text-sm/6 text-zinc-600 max-w-prose mx-auto">
+              <p className="mt-3 text-sm/7 text-zinc-600 max-w-prose mx-auto">
                 الانطلاقة الحقيقية لأي مطوّر يبدأ بسؤال الشغف والفرصة. سجّل بريدك لتحصل على رابط الدخول.
               </p>
 
@@ -251,7 +251,7 @@ export function Hero() {
                         setIsSubmitting(false)
                       }
                     }}
-                    className="mt-6 flex flex-col sm:flex-row items-stretch gap-3 mx-auto max-w-sm w-full"
+                    className="mt-6 flex flex-col sm:flex-row items-stretch gap-3 mx-auto max-w-md w-full"
                   >
                     <input
                       type="email"
@@ -264,7 +264,7 @@ export function Hero() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="inline-flex w-full sm:w-auto justify-center items-center gap-1.5 rounded-full bg-indigo-600 px-6 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400 transition-colors"
+                      className="inline-flex w-full sm:w-auto justify-center items-center gap-1.5 rounded-full bg-indigo-600 px-6 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
                     >
                       {isSubmitting ? "جاري التسجيل..." : "سجّل الآن"}
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -278,14 +278,16 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="absolute left-1/2 top-[1%] -translate-x-1/2 z-20">
-          <Image
-            src="/logo.png"
-            alt="Majan Programmers Club Logo"
-            width={300}
-            height={300}
-            className="w-[200px] sm:w-[220px] md:w-[240px] lg:w-[300px] h-auto object-contain drop-shadow-[0_10px_28px_rgba(15,23,42,0.25)]"
-          />
+        <div className="absolute left-1/2 top-[clamp(8px,1.5vh,20px)] -translate-x-1/2 z-20">
+          <div className="relative w-[clamp(128px,22vw,200px)] aspect-square">
+            <Image
+              src="/logo.png"
+              alt="Majan Programmers Club Logo"
+              fill
+              sizes="(max-width: 640px) 128px, (max-width: 1024px) 22vw, 200px"
+              className="object-contain drop-shadow-[0_10px_28px_rgba(15,23,42,0.25)]"
+            />
+          </div>
         </div>
 
         <div
