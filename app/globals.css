@@ -75,7 +75,7 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-ibm-plex-arabic), "IBM Plex Sans Arabic", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-cairo), "Cairo", ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
   --font-serif: Georgia, "Times New Roman", serif;
   --color-background: var(--background);

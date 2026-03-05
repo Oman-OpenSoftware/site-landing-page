@@ -1,19 +1,26 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { IBM_Plex_Sans_Arabic, Geist_Mono } from "next/font/google"
+import { Cairo, Noto_Kufi_Arabic, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
-const ibmPlexSansArabic = IBM_Plex_Sans_Arabic({
+const cairo = Cairo({
   subsets: ["arabic"],
-  weight: ["200", "300", "400", "500", "600", "700"],
-  variable: "--font-ibm-plex-arabic",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-cairo",
   display: "swap",
 })
 
 const geistMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-geist-mono",
+})
+
+const notoKufiArabic = Noto_Kufi_Arabic({
+  subsets: ["arabic"],
+  weight: ["500", "700"],
+  variable: "--font-noto-kufi-arabic",
+  display: "swap",
 })
 
 export const metadata: Metadata = {
@@ -28,8 +35,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`${ibmPlexSansArabic.variable} ${geistMono.variable} font-sans antialiased`}>
+    <html lang="ar" dir="rtl">
+      <body className={`${cairo.variable} ${geistMono.variable} ${notoKufiArabic.variable} font-sans antialiased`}>
         {children}
         <Analytics />
       </body>

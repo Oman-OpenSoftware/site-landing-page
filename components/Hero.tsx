@@ -1,160 +1,6 @@
-"use client"
-
-import Link from "next/link"
 import Image from "next/image"
-import { useRef, useState, useEffect } from "react"
-import { gsap } from "gsap"
-import { Plus, ArrowRight } from "lucide-react"
-
 
 export function Hero() {
-  const cardRef = useRef<HTMLDivElement>(null)
-  const pixelGridRef = useRef<HTMLDivElement>(null)
-  const tagsRef = useRef<HTMLDivElement>(null)
-  const customCursorRef = useRef<HTMLDivElement>(null)
-  const [showCustomCursor, setShowCustomCursor] = useState(false)
-  const [email, setEmail] = useState("")
-  const [submitted, setSubmitted] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitError, setSubmitError] = useState("")
-
-  useEffect(() => {
-    const tagsElement = tagsRef.current
-    const cursorElement = customCursorRef.current
-
-    if (!tagsElement || !cursorElement) return
-
-    let cursorX = 0
-    let cursorY = 0
-
-    const handleMouseMove = (e: MouseEvent) => {
-      cursorX = e.clientX
-      cursorY = e.clientY
-
-      gsap.to(cursorElement, {
-        x: cursorX - 15,
-        y: cursorY - 15,
-        duration: 0.3,
-        ease: "power2.out",
-      })
-    }
-
-    const handleMouseEnter = () => {
-      setShowCustomCursor(true)
-    }
-
-    const handleMouseLeave = () => {
-      setShowCustomCursor(false)
-    }
-
-    tagsElement.addEventListener("mouseenter", handleMouseEnter)
-    tagsElement.addEventListener("mouseleave", handleMouseLeave)
-    tagsElement.addEventListener("mousemove", handleMouseMove)
-
-    return () => {
-      tagsElement.removeEventListener("mouseenter", handleMouseEnter)
-      tagsElement.removeEventListener("mouseleave", handleMouseLeave)
-      tagsElement.removeEventListener("mousemove", handleMouseMove)
-    }
-  }, [])
-
-  const handleMouseLeave = () => {
-    if (!cardRef.current || !pixelGridRef.current) return
-
-    const gridSize = 4
-    const pixelSize = 100 / gridSize
-
-    pixelGridRef.current.innerHTML = ""
-
-    const totalPixels = gridSize * gridSize
-    const clearIndices = new Set<number>()
-    while (clearIndices.size < 3) {
-      clearIndices.add(Math.floor(Math.random() * totalPixels))
-    }
-
-    let pixelIndex = 0
-    for (let row = 0; row < gridSize; row++) {
-      for (let col = 0; col < gridSize; col++) {
-        if (clearIndices.has(pixelIndex)) {
-          pixelIndex++
-          continue
-        }
-
-        const pixel = document.createElement("div")
-        const isIndigo = Math.random() < 0.5
-
-        const normalizedPosition = (col + (gridSize - 1 - row)) / ((gridSize - 1) * 2)
-        const targetOpacity = 0.5 + normalizedPosition * 0.5
-
-        pixel.className = `absolute ${isIndigo ? "bg-indigo-400" : "bg-zinc-300"}`
-        pixel.style.width = `${pixelSize}%`
-        pixel.style.height = `${pixelSize}%`
-        pixel.style.left = `${col * pixelSize}%`
-        pixel.style.top = `${row * pixelSize}%`
-        pixel.style.opacity = "0"
-        pixel.style.display = "block"
-        pixel.setAttribute("data-target-opacity", targetOpacity.toString())
-        pixelGridRef.current.appendChild(pixel)
-
-        pixelIndex++
-      }
-    }
-
-    const pixels = Array.from(pixelGridRef.current.children)
-    const animationStepDuration = 0.45
-    const actualPixelCount = pixels.length
-    const staggerDuration = animationStepDuration / actualPixelCount
-
-    const tl = gsap.timeline()
-
-    tl.to(cardRef.current, {
-      scale: 0.995,
-      duration: 0.2,
-      ease: "power2.in",
-    })
-
-    tl.to(
-      pixels,
-      {
-        opacity: (index, target) => {
-          const el = target as HTMLElement
-          return el.getAttribute("data-target-opacity") || "1"
-        },
-        duration: 0.45,
-        ease: "power2.in",
-        stagger: {
-          each: staggerDuration,
-          from: "random",
-        },
-      },
-      "<",
-    )
-
-    tl.to(
-      pixels,
-      {
-        opacity: 0,
-        duration: 0.3,
-        ease: "power2.out",
-      },
-      `+=${animationStepDuration}`,
-    )
-
-    tl.to(
-      cardRef.current,
-      {
-        scale: 1,
-        duration: 0.3,
-        ease: "power2.in",
-      },
-      "<",
-    )
-
-    tl.set(pixels, {
-      display: "none",
-    })
-  }
-
   return (
     <section className="p-2 sm:p-[1.5%] bg-zinc-100">
       <svg width="0" height="0" style={{ position: "absolute" }}>
@@ -169,7 +15,7 @@ export function Hero() {
         </defs>
       </svg>
 
-      <div className="relative isolate w-full min-h-[calc(100svh-3vh)] sm:min-h-[calc(100svh-3vh)]">
+      <div className="relative isolate w-full min-h-[calc(100svh-3vh)]">
         <div
           className="absolute inset-0 overflow-hidden"
           style={{
@@ -185,95 +31,39 @@ export function Hero() {
               backgroundSize: "60px 60px",
             }}
           />
+
           <video
             autoPlay
             loop
             muted
             playsInline
-            className="absolute top-[56%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[38%] sm:top-1/2 sm:w-[70%] sm:h-[45%] md:w-[55%] md:h-[52%] lg:w-[50%] lg:h-[55%] object-cover rounded-3xl opacity-80 mix-blend-multiply"
+            className="absolute top-[54%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] h-[42%] sm:w-[72%] sm:h-[48%] md:w-[56%] md:h-[55%] lg:w-[50%] lg:h-[58%] object-cover rounded-3xl opacity-80 mix-blend-multiply"
           >
-            <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/liquid-metal-video_yX6NvjdW-6bLYorR3Ihmlwjivg3pjA978qrSKRU.mp4" type="video/mp4" />
+            <source
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/liquid-metal-video_yX6NvjdW-6bLYorR3Ihmlwjivg3pjA978qrSKRU.mp4"
+              type="video/mp4"
+            />
           </video>
 
           <div className="pointer-events-none absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-transparent to-white/70" />
-            <div className="absolute inset-0 [background:radial-gradient(60%_60%_at_50%_50%,transparent_0%,rgba(255,255,255,.5)_100%)]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-transparent to-white/80" />
+            <div className="absolute inset-0 [background:radial-gradient(60%_60%_at_50%_50%,transparent_0%,rgba(255,255,255,.45)_100%)]" />
           </div>
 
-          <div className="absolute inset-0 flex items-center justify-center pt-[clamp(70px,11vh,150px)] z-10">
-            <div
-              ref={cardRef}
-              onMouseLeave={handleMouseLeave}
-              className="relative overflow-hidden backdrop-blur-md bg-white/70 border border-zinc-200 rounded-2xl p-6 sm:p-8 md:p-12 transition-transform duration-500 ease-in hover:scale-[1.01] max-w-[min(40rem,94vw)] w-full text-center"
-              dir="rtl"
-            >
-              <div ref={pixelGridRef} className="absolute inset-0 pointer-events-none z-10" />
+          <div className="absolute inset-0 flex items-center justify-center px-4 z-10">
+            <div className="w-full max-w-3xl rounded-3xl border border-zinc-200/80 bg-white/75 backdrop-blur-md shadow-[0_18px_90px_rgba(0,0,0,0.12)] p-8 sm:p-12 md:p-16 text-center" dir="rtl">
+              <div className="inline-flex items-center gap-2 rounded-full border border-zinc-300/80 bg-white/90 px-4 py-1.5 text-[11px] sm:text-xs tracking-[0.08em] text-zinc-700">
+                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                تحديث الإطلاق
+              </div>
 
-              <h1 className="text-balance text-2xl/tight sm:text-4xl/tight md:text-5xl/tight tracking-tight text-zinc-900">
-                الجلسة التعريفية لنادي مجان للمبرمجين
+              <h1 className="[font-family:var(--font-noto-kufi-arabic)] mt-5 text-[clamp(2.8rem,11vw,6rem)] leading-[1.05] tracking-[0.01em] text-zinc-900">
+                قريبًا
               </h1>
-              <p className="mt-3 text-sm/7 text-zinc-600 max-w-prose mx-auto">
-                الانطلاقة الحقيقية لأي مطوّر يبدأ بسؤال الشغف والفرصة. سجّل بريدك لتحصل على رابط الدخول.
+
+              <p className="mt-4 max-w-xl mx-auto text-sm sm:text-base text-zinc-700">
+                نعمل على تجربة مميزة بعناية. ترقبوا الإطلاق الرسمي قريبًا.
               </p>
-
-              {submitted ? (
-                <p className="mt-6 text-sm font-medium text-indigo-600">
-                  تم تسجيلك بنجاح. سنرسل لك رابط الجلسة قريبًا.
-                </p>
-              ) : (
-                <>
-                  <form
-                    onSubmit={async (e) => {
-                      e.preventDefault()
-                      if (!email || isSubmitting) return
-
-                      setSubmitError("")
-                      setIsSubmitting(true)
-
-                      try {
-                        const res = await fetch("/api/subscribe", {
-                          method: "POST",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify({ email }),
-                        })
-
-                        const data = await res.json().catch(() => ({}))
-                        if (!res.ok) {
-                          throw new Error(data?.error || "تعذّر التسجيل حاليًا. حاول مرة أخرى.")
-                        }
-
-                        setSubmitted(true)
-                      } catch (error) {
-                        const message =
-                          error instanceof Error ? error.message : "تعذّر التسجيل حاليًا. حاول مرة أخرى."
-                        setSubmitError(message)
-                      } finally {
-                        setIsSubmitting(false)
-                      }
-                    }}
-                    className="mt-6 flex flex-col sm:flex-row items-stretch gap-3 mx-auto max-w-md w-full"
-                  >
-                    <input
-                      type="email"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="أدخل بريدك الإلكتروني"
-                      className="w-full flex-1 rounded-full border border-zinc-300 bg-white px-4 py-2.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                    />
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="inline-flex w-full sm:w-auto justify-center items-center gap-1.5 rounded-full bg-indigo-600 px-6 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400 transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
-                    >
-                      {isSubmitting ? "جاري التسجيل..." : "سجّل الآن"}
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-                  </form>
-                  <p className="mt-3 text-xs text-zinc-600">سنرسل لك رابط الجلسة فور التسجيل.</p>
-                  {submitError ? <p className="mt-2 text-xs text-red-600">{submitError}</p> : null}
-                </>
-              )}
             </div>
           </div>
         </div>
@@ -289,15 +79,6 @@ export function Hero() {
             />
           </div>
         </div>
-
-        <div
-          ref={customCursorRef}
-          className={`fixed w-[30px] h-[30px] rounded-full bg-indigo-500 pointer-events-none z-50 transition-opacity duration-200 ${
-            showCustomCursor ? "opacity-100" : "opacity-0"
-          }`}
-          style={{ left: 0, top: 0 }}
-        />
-
       </div>
     </section>
   )
